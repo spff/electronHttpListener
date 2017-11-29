@@ -5,7 +5,10 @@
     <title>Hello World!</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
+
+    <p id="tray-countdown">Click the button to change the text in this paragraph.</p>
+    <button id="put-in-tray" >Try it</button>
+
     <!-- All of the Node.js APIs are available in this renderer process. -->
     We are using Node.js <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
@@ -14,6 +17,8 @@
     <script>
       // You can also require other files to run in this process
       require('./renderer.js')
+
+
     </script>
   </body>
 </html>
