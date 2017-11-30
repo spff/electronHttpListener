@@ -14,6 +14,7 @@ const url = require('url')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let hijectOnClose = true
 
 function createWindow () {
   // Create the browser window.
@@ -37,7 +38,7 @@ function createWindow () {
     appIcon = new Tray(iconPath)
     const contextMenu = Menu.buildFromTemplate([
       {
-        label: 'Remove',
+        label: 'Pop Up',
         click: function () {
           event.sender.send('tray-removed')
         }
@@ -79,9 +80,10 @@ function createWindow () {
 
   mainWindow.on('close', function (event){
     console.log("on close")
-
-    put_in_tray(event)
-    event.preventDefault()
+    if(hijectOnClose){
+      put_in_tray(event)
+      event.preventDefault()
+    }
   })
 
   mainWindow.on('minimize', put_in_tray)
@@ -95,6 +97,9 @@ function createWindow () {
 
 
   ipc.on('exit-tray', function () {
+    console.log("exit")
+
+    hijectOnClose = false
     app.quit()
     
   })

@@ -26,3 +26,9 @@ ipc.on('tray-removed', function () {
   trayOn = false
   document.getElementById('tray-countdown').innerHTML = ''
 })
+
+ipc.on('tray-exit', function () {
+  ipc.send('exit-tray')
+  trayOn = false
+  document.getElementById('tray-countdown').innerHTML = ''
+})

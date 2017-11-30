@@ -1,0 +1,20 @@
+{
+  "name": "electron-http-listener",
+  "version": "1.0.0",
+  "description": "A simple Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/spff/electronHttpListener",
+  "keywords": [
+    "Electron",
+    "http"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "~1.7.8",
+    "electron-packager": "^10.1.0"
+  }
+}
