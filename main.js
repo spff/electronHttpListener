@@ -16,6 +16,16 @@ const url = require('url')
 let mainWindow
 let hijectOnClose = true
 
+
+
+
+
+
+
+
+
+
+
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600})
@@ -30,6 +40,7 @@ function createWindow () {
   }))
 
 
+  let appIcon = null
 
 
   function put_in_tray(event) {
@@ -50,14 +61,15 @@ function createWindow () {
         }
       }
     ])
-    appIcon.setToolTip('Electron Demo in the tray.')
+    appIcon.setToolTip('Right click to show menu')
     appIcon.setContextMenu(contextMenu)
 
     mainWindow.hide()
   }
 
   function remove_tray() {
-    appIcon.destroy()
+    if(appIcon != null)
+      appIcon.destroy()
     mainWindow.show()
 
   }
@@ -89,7 +101,6 @@ function createWindow () {
   mainWindow.on('minimize', put_in_tray)
 
 
-	let appIcon = null
 
 	ipc.on('put-in-tray', put_in_tray)
 
@@ -117,21 +128,33 @@ function createWindow () {
   
 
   var window = new BrowserWindow({show: false})
+  var express = require('express')
+  var myServer = express()
+  var bodyParser = require('body-parser');
+  myServer.use(bodyParser.json()); // for parsing application/json
+  myServer.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+  var jsonParser = bodyParser.json()
+  myServer.post('', jsonParser, function (req, res) {
+      //if (!req.body) return res.sendStatus(400)
+      // create user in req.body
+
+      console.log(req.body)
+      console.log(req.is('application/json'))
+      console.log("receive POST")
+      remove_tray()
+      ret = res.writeHead(200, { 'Content-Type': 'text/plain' })
+      res.end('okay')
+      return ret
+  })
+
   window.loadURL("file://" + __dirname + "/app.html")
   window.webContents.once("did-finish-load", function () {
       var http = require("http");
       var crypto = require("crypto");
 
 
-      const server = http.createServer((req, res) => {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end('okay');
-        console.log("get")
-        remove_tray()
-      });
-      
-      // now that proxy is running
-      server.listen(1337, '127.0.0.1');
+      http.createServer(myServer).listen(1337, '127.0.0.1');
 
       console.log("http://localhost:1337/")
   })
