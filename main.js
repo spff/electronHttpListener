@@ -84,13 +84,13 @@ function createWindow () {
   // Dereference the window object, usually you would store windows
   // in an array if your app supports multi windows, this is the time
   // when you should delete the corresponding element.
-  mainWindow.on('closed', function(){
+  mainWindow.on('closed', ()=>{
     mainWindow = null
   })
 
 
 
-  mainWindow.on('close', function (event){
+  mainWindow.on('close', (event)=>{
     console.log("on close")
     if(hijectOnClose){
       put_in_tray(event)
@@ -107,7 +107,7 @@ function createWindow () {
 	ipc.on('remove-tray', remove_tray)
 
 
-  ipc.on('exit-tray', function () {
+  ipc.on('exit-tray', ()=> {
     console.log("exit")
 
     hijectOnClose = false
@@ -116,7 +116,7 @@ function createWindow () {
   })
 
 
-  ipc.on("console", function (ev) {
+  ipc.on("console", (ev)=> {
         var args = [].slice.call(arguments, 1);
         var r = console.log.apply(console, args)
         ev.returnValue = [r];
@@ -127,7 +127,6 @@ function createWindow () {
   });
   
 
-  var window = new BrowserWindow({show: false})
   var express = require('express')
   var myServer = express()
   var bodyParser = require('body-parser');
@@ -135,7 +134,7 @@ function createWindow () {
   myServer.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
   var jsonParser = bodyParser.json()
-  myServer.post('', jsonParser, function (req, res) {
+  myServer.post('', jsonParser, (req, res)=> {
       //if (!req.body) return res.sendStatus(400)
       // create user in req.body
 
@@ -148,16 +147,12 @@ function createWindow () {
       return ret
   })
 
-  window.loadURL("file://" + __dirname + "/app.html")
-  window.webContents.once("did-finish-load", function () {
-      var http = require("http");
-      var crypto = require("crypto");
 
+  var http = require("http");
+  var crypto = require("crypto");
 
-      http.createServer(myServer).listen(1337, '127.0.0.1');
-
-      console.log("http://localhost:1337/")
-  })
+  http.createServer(myServer).listen(1337, '127.0.0.1');
+  console.log("http://localhost:1337/")
 
 
 
@@ -170,7 +165,7 @@ function createWindow () {
 app.on('ready', createWindow)
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function () {
+app.on('window-all-closed', ()=> {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (appIcon)
@@ -181,7 +176,7 @@ app.on('window-all-closed', function () {
   }
 })
 
-app.on('activate', function () {
+app.on('activate', ()=> {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {

@@ -8,7 +8,7 @@ const ipc = require('electron').ipcRenderer
 const trayBtn = document.getElementById('put-in-tray')
 let trayOn = false
 
-trayBtn.addEventListener('click', function (event) {
+trayBtn.addEventListener('click', (event)=> {
   if (trayOn) {
     trayOn = false
     document.getElementById('tray-countdown').innerHTML = ''
@@ -21,13 +21,13 @@ trayBtn.addEventListener('click', function (event) {
   }
 })
 // Tray removed from context menu on icon
-ipc.on('tray-removed', function () {
+ipc.on('tray-removed', ()=> {
   ipc.send('remove-tray')
   trayOn = false
   document.getElementById('tray-countdown').innerHTML = ''
 })
 
-ipc.on('tray-exit', function () {
+ipc.on('tray-exit', ()=> {
   ipc.send('exit-tray')
   trayOn = false
   document.getElementById('tray-countdown').innerHTML = ''
