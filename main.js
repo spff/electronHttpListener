@@ -19,6 +19,9 @@ let hijectOnClose = true
 
 
 
+ipc.on('log-from-renderer', (event, data)=>{
+  console.log("log-from-renderer :" + data)
+})
 
 
 
@@ -144,6 +147,10 @@ function createWindow () {
       console.log(req.is('application/json'))
       console.log("receive POST")
       remove_tray()
+
+      mainWindow.webContents.send('new-message' , req.body);
+
+
       ret = res.writeHead(200, { 'Content-Type': 'text/plain' })
       res.end('okay')
       return ret
