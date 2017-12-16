@@ -68,6 +68,8 @@ function createWindow () {
   }
 
   function remove_tray() {
+  	    console.log("remove-tray")
+
     if(appIcon != null)
       appIcon.destroy()
     mainWindow.show()
@@ -102,9 +104,9 @@ function createWindow () {
 
 
 
-	ipc.on('put-in-tray', put_in_tray)
+  ipc.on('put-in-tray', put_in_tray)
 
-	ipc.on('remove-tray', remove_tray)
+  ipc.on('remove-tray', remove_tray)
 
 
   ipc.on('exit-tray', ()=> {

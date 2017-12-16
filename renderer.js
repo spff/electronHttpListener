@@ -11,12 +11,12 @@ let trayOn = false
 trayBtn.addEventListener('click', (event)=> {
   if (trayOn) {
     trayOn = false
-    document.getElementById('tray-countdown').innerHTML = ''
     ipc.send('remove-tray')
+
   } else {
     trayOn = true
     const message = 'Click demo again to remove.'
-    document.getElementById('tray-countdown').innerHTML = message
+    document.getElementById('text-panel').innerHTML = message
     ipc.send('put-in-tray')
   }
 })
@@ -24,11 +24,9 @@ trayBtn.addEventListener('click', (event)=> {
 ipc.on('tray-removed', ()=> {
   ipc.send('remove-tray')
   trayOn = false
-  document.getElementById('tray-countdown').innerHTML = ''
 })
 
 ipc.on('tray-exit', ()=> {
   ipc.send('exit-tray')
   trayOn = false
-  document.getElementById('tray-countdown').innerHTML = ''
 })
