@@ -28,7 +28,7 @@ let hijectOnClose = true
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({width: 480, height: 720})
   mainWindow.setMenuBarVisibility(false)
 
 
