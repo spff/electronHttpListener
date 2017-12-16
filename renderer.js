@@ -24,8 +24,8 @@ ipc.on('tray-exit', ()=> {
 })
 
 ipc.on('new-message', (event, data)=> {
-  shLog("render " + data.msg)
-  textPanel.innerHTML = "" + data.msg
+  shLog(JSON.stringify(data.msg))
+  textPanel.innerHTML = JSON.stringify(data.msg)
 
 })
 

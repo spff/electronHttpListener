@@ -148,7 +148,7 @@ function createWindow () {
       console.log("receive POST")
       remove_tray()
 
-      mainWindow.webContents.send('new-message' , req.body);
+      mainWindow.webContents.send('new-message' , {msg:req.body});
 
 
       ret = res.writeHead(200, { 'Content-Type': 'text/plain' })
