@@ -2,19 +2,48 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="./style.css" />
     <title>Hello World!</title>
+
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Raleway:200" rel="stylesheet">
+
+
   </head>
   <body>
-    <img src="resource/123.jpg">
 
-    <p id="tray-countdown">Click the button to change the text in this paragraph.</p>
-    <button id="put-in-tray" >Try it</button>
 
-    <!-- All of the Node.js APIs are available in this renderer process. -->
+
+    <div class="bgimg">
+      <div class="middlefilter">
+
+          <div class="topleft">
+          </div>
+
+
+
+          <div class="middle">
+            <h1>Bon jour!</h1>
+            <hr>
+          
+            <p id="text-panel">C'est SuperFries</p>
+            
+
+          </div>
+
+
+      </div>
+      
+    </div>
+
+
+
+    <!-- All of the Node.js APIs are available in this renderer process. 
     We are using Node.js <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>.
-
+-->
     <script>
       // You can also require other files to run in this process
       require('./renderer.js')

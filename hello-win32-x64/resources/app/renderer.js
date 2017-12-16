@@ -5,30 +5,31 @@
 
 const ipc = require('electron').ipcRenderer
 
-const trayBtn = document.getElementById('put-in-tray')
+
+const textPanel = document.getElementById('text-panel')
+
 let trayOn = false
 
-trayBtn.addEventListener('click', function (event) {
-  if (trayOn) {
-    trayOn = false
-    document.getElementById('tray-countdown').innerHTML = ''
-    ipc.send('remove-tray')
-  } else {
-    trayOn = true
-    const message = 'Click demo again to remove.'
-    document.getElementById('tray-countdown').innerHTML = message
-    ipc.send('put-in-tray')
-  }
-})
 // Tray removed from context menu on icon
-ipc.on('tray-removed', function () {
+ipc.on('tray-removed', ()=> {
   ipc.send('remove-tray')
+    shLog("remove-tray")
+
   trayOn = false
-  document.getElementById('tray-countdown').innerHTML = ''
 })
 
-ipc.on('tray-exit', function () {
+ipc.on('tray-exit', ()=> {
   ipc.send('exit-tray')
   trayOn = false
-  document.getElementById('tray-countdown').innerHTML = ''
 })
+
+ipc.on('new-message', (event, data)=> {
+  shLog(JSON.stringify(data.msg))
+  textPanel.innerHTML = JSON.stringify(data.msg)
+
+})
+
+
+function shLog(message){
+  ipc.send('log-from-renderer', message)
+}

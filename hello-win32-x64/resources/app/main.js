@@ -16,9 +16,22 @@ const url = require('url')
 let mainWindow
 let hijectOnClose = true
 
+
+
+
+ipc.on('log-from-renderer', (event, data)=>{
+  console.log("log-from-renderer :" + data)
+})
+
+
+
+
+
+
+
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({width: 480, height: 720})
   mainWindow.setMenuBarVisibility(false)
 
 
@@ -30,6 +43,7 @@ function createWindow () {
   }))
 
 
+  let appIcon = null
 
 
   function put_in_tray(event) {
@@ -50,14 +64,17 @@ function createWindow () {
         }
       }
     ])
-    appIcon.setToolTip('Electron Demo in the tray.')
+    appIcon.setToolTip('Right click to show menu')
     appIcon.setContextMenu(contextMenu)
 
     mainWindow.hide()
   }
 
   function remove_tray() {
-    appIcon.destroy()
+  	    console.log("remove-tray")
+
+    if(appIcon != null)
+      appIcon.destroy()
     mainWindow.show()
 
   }
@@ -72,13 +89,13 @@ function createWindow () {
   // Dereference the window object, usually you would store windows
   // in an array if your app supports multi windows, this is the time
   // when you should delete the corresponding element.
-  mainWindow.on('closed', function(){
+  mainWindow.on('closed', ()=>{
     mainWindow = null
   })
 
 
 
-  mainWindow.on('close', function (event){
+  mainWindow.on('close', (event)=>{
     console.log("on close")
     if(hijectOnClose){
       put_in_tray(event)
@@ -89,14 +106,13 @@ function createWindow () {
   mainWindow.on('minimize', put_in_tray)
 
 
-	let appIcon = null
 
-	ipc.on('put-in-tray', put_in_tray)
+  ipc.on('put-in-tray', put_in_tray)
 
-	ipc.on('remove-tray', remove_tray)
+  ipc.on('remove-tray', remove_tray)
 
 
-  ipc.on('exit-tray', function () {
+  ipc.on('exit-tray', ()=> {
     console.log("exit")
 
     hijectOnClose = false
@@ -105,7 +121,7 @@ function createWindow () {
   })
 
 
-  ipc.on("console", function (ev) {
+  ipc.on("console", (ev)=> {
         var args = [].slice.call(arguments, 1);
         var r = console.log.apply(console, args)
         ev.returnValue = [r];
@@ -116,25 +132,36 @@ function createWindow () {
   });
   
 
-  var window = new BrowserWindow({show: false})
-  window.loadURL("file://" + __dirname + "/app.html")
-  window.webContents.once("did-finish-load", function () {
-      var http = require("http");
-      var crypto = require("crypto");
+  var express = require('express')
+  var myServer = express()
+  var bodyParser = require('body-parser');
+  myServer.use(bodyParser.json()); // for parsing application/json
+  myServer.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+  var jsonParser = bodyParser.json()
+  myServer.post('', jsonParser, (req, res)=> {
+      //if (!req.body) return res.sendStatus(400)
+      // create user in req.body
+
+      console.log(req.body)
+      console.log(req.is('application/json'))
+      console.log("receive POST")
+      remove_tray()
+
+      mainWindow.webContents.send('new-message' , {msg:req.body});
 
 
-      const server = http.createServer((req, res) => {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end('okay');
-        console.log("get")
-        remove_tray()
-      });
-      
-      // now that proxy is running
-      server.listen(1337, '127.0.0.1');
-
-      console.log("http://localhost:1337/")
+      ret = res.writeHead(200, { 'Content-Type': 'text/plain' })
+      res.end('okay')
+      return ret
   })
+
+
+  var http = require("http");
+  var crypto = require("crypto");
+
+  http.createServer(myServer).listen(1337, '127.0.0.1');
+  console.log("http://localhost:1337/")
 
 
 
@@ -147,7 +174,7 @@ function createWindow () {
 app.on('ready', createWindow)
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function () {
+app.on('window-all-closed', ()=> {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (appIcon)
@@ -158,7 +185,7 @@ app.on('window-all-closed', function () {
   }
 })
 
-app.on('activate', function () {
+app.on('activate', ()=> {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
