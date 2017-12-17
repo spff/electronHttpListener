@@ -6,7 +6,7 @@
 const ipc = require('electron').ipcRenderer
 
 
-const textPanel = document.getElementById('text-panel')
+const latex = document.getElementById('latex')
 
 let trayOn = false
 
@@ -25,11 +25,31 @@ ipc.on('tray-exit', ()=> {
 
 ipc.on('new-message', (event, data)=> {
   shLog(JSON.stringify(data.msg))
-  textPanel.innerHTML = JSON.stringify(data.msg)
-
+  latex.innerHTML = JSON.stringify(data.msg)
+  addBlock("", "")
 })
 
 
 function shLog(message){
   ipc.send('log-from-renderer', message)
+}
+
+
+function addBlock(str1, str2){
+    // Container <div> where dynamic content will be placed
+    var container = document.getElementById("middle-container");
+    var div = '<div class="block"><div class="panel-in-block"><button class="button-in-panel"></button></div>12/05 14:27:31 06-12-001 伊兆<br>172-24155213 RL 放行</div>';
+                
+              
+               
+    /*while (container.hasChildNodes()) {
+        container.removeChild(container.lastChild);
+    }*/
+    
+        container.innerHTML += div;
+        // Append a line break 
+//        container.appendChild(document.createElement("br"));
+    
+
+
 }

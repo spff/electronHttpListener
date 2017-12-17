@@ -3,6 +3,7 @@ body, html {
 }
 
 .bgimg {
+
     /* Background image */
     background-image: url('resource/123.jpg');
     /* Full-screen */
@@ -37,18 +38,6 @@ body, html {
     left: 16px;
 }
 
-/* Position text in the middle */
-.middle {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-
-    font-family: "Raleway", "Open Sans", sans-serif;
-    //font-style: light;
-}
-
 /* Position background filter in the middle */
 .middlefilter {
     width: 100%;
@@ -56,9 +45,51 @@ body, html {
     background: rgba(0, 0, 0, 0.6);
 }
 
+/* Position text in the middle */
+.middle {
+    position: absolute;
+    width: 80%;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+
+    font-family: "Raleway", "Open Sans", sans-serif;
+}
+
+
 
 /* Style the <hr> element */
 hr {
     margin: auto;
     width: 100%;
+}
+
+.block {
+    margin-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 4px;
+
+    background-color: rgba(76, 76, 80, 0.8);
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+}
+
+.panel-in-block {
+    height: 16px;
+    padding-top: 5px;
+    padding-bottom: 0px;
+    padding-right: 5px;
+    
+}
+
+.button-in-panel {
+    background-color: rgba(128, 128, 128, 0.8);
+    
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    border: none;
+    float: right;
+
 }

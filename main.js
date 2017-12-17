@@ -31,9 +31,8 @@ ipc.on('log-from-renderer', (event, data)=>{
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 480, height: 720})
+  mainWindow = new BrowserWindow({width: 480, height: 720, resizable: false, fullscreenable: false})
   mainWindow.setMenuBarVisibility(false)
-
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -41,6 +40,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }))
+  mainWindow.webContents.openDevTools();
 
 
   let appIcon = null
