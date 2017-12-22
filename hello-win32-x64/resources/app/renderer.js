@@ -35,20 +35,31 @@ function shLog(message){
 }
 
 
+
+
 function addBlock(str1, str2){
     // Container <div> where dynamic content will be placed
-    var container = document.getElementById("middle-container");
-    var div = '<div class="block"><div class="panel-in-block"><button class="button-in-panel"></button></div>12/05 14:27:31 06-12-001 伊兆<br>172-24155213 RL 放行</div>';
-                
-              
-               
-    /*while (container.hasChildNodes()) {
-        container.removeChild(container.lastChild);
-    }*/
+    var container = document.getElementById("scroll-container");
     
-        container.innerHTML += div;
-        // Append a line break 
-//        container.appendChild(document.createElement("br"));
+    var block = document.createElement("div")
+	block.setAttribute("class", "block");
+	var panel = document.createElement("div")
+    panel.setAttribute("class", "panel-in-block");
+    var button = document.createElement("div")
+    button.setAttribute("class", "button-in-panel");
+
+    button.addEventListener("click", (e)=>{
+    	block.remove()
+    })
+
+    panel.appendChild(button)
+    block.appendChild(panel)
+    var text = document.createElement("div")
+    text.innerHTML += "12/05 14:27:31 06-12-001 伊兆<br>172-24155213 RL 放行"
+    block.appendChild(text)
+    
+    container.appendChild(block)
+
     
 
 
