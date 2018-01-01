@@ -19,17 +19,19 @@ let hijectOnClose = true
 
 
 
+
+
+
+
 ipc.on('log-from-renderer', (event, data)=>{
   console.log("log-from-renderer :" + data)
 })
 
 
 
-
-
-
-
 function createWindow () {
+  //TODO read employeeName and employeeId from config file for a temp solution
+
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 480, height: 720, resizable: false, fullscreenable: false})
   mainWindow.setMenuBarVisibility(false)
@@ -132,36 +134,28 @@ function createWindow () {
   });
   
 
-  var express = require('express')
-  var myServer = express()
-  var bodyParser = require('body-parser');
-  myServer.use(bodyParser.json()); // for parsing application/json
-  myServer.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
-  var jsonParser = bodyParser.json()
-  myServer.post('', jsonParser, (req, res)=> {
-      //if (!req.body) return res.sendStatus(400)
-      // create user in req.body
-
-      console.log(req.body)
-      console.log(req.is('application/json'))
-      console.log("receive POST")
-      remove_tray()
-
-      mainWindow.webContents.send('new-message' , {msg:req.body});
 
 
-      ret = res.writeHead(200, { 'Content-Type': 'text/plain' })
-      res.end('okay')
-      return ret
+  const server_ip = "http://localhost:5000";
+  var socket = require('socket.io-client')(server_ip);
+  socket.on('connect', function(){
+    console.log('[%s]on connect...', socket.id)
+    //TODO replace to the real emplayeeId read from config file
+    socket.emit('login', JSON.stringify({employeeId : '1'}))
+    remove_tray()
   })
 
+  socket.on('news', function(data){
+    console.log('[%s]on news...', socket.id, data);
 
-  var http = require("http");
-  var crypto = require("crypto");
+    remove_tray()
+    mainWindow.webContents.send('new-message' , {msg:data});
+  });
 
-  http.createServer(myServer).listen(1337, '127.0.0.1');
-  console.log("http://localhost:1337/")
+  socket.on('disconnect', function(){
+    console.log('[%s]on disconnect....', socket.id);
+    //TODO should notify user
+  });
 
 
 
