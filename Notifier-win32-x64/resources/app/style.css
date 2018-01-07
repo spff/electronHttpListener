@@ -1,0 +1,95 @@
+body, html {
+    height: 100%
+}
+
+.bgimg {
+
+    /* Background image */
+    background-image: url('resource/123.jpg');
+    /* Full-screen */
+    height: 100%;
+    /* Center the background image */
+    background-position: center;
+    /* Scale and zoom in the image */
+    background-size: cover;
+    /* Add position: relative to enable absolutely positioned elements inside the image (place text) */
+    position: relative;
+    /* Add a white text color to all elements inside the .bgimg container */
+    color: white;
+    /* Add a font */
+    font-family: "Open Sans";
+    font-style: light;
+
+    /* Set the font-size to 25 pixels */
+    font-size: 25px;
+
+}
+
+/* Position background filter in the middle */
+.middlefilter {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* Position text in the middle */
+.middle {
+    position: relative;
+    width: 80%;
+    height: 70%;
+    top: 10%;
+    left: 10%;
+
+    font-size: 22px;
+
+    font-family: "Raleway", "Open Sans", sans-serif;
+
+}
+
+
+
+/* Style the <hr> element */
+hr {
+    margin: auto;
+    width: 100%;
+}
+
+.scroll-container {
+    position: relative;
+
+    width: 380px;
+    height: 100%;
+    overflow: scroll;
+}
+
+.block {
+    position: relative;
+
+    margin-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 4px;
+
+    background-color: rgba(76, 76, 80, 0.8);
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+}
+
+.panel-in-block {
+    height: 16px;
+    padding-top: 5px;
+    padding-bottom: 0px;
+    padding-right: 5px;
+    
+}
+
+.button-in-panel {
+    background-color: rgba(128, 128, 128, 0.8);
+    
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    border: none;
+    float: right;
+
+}

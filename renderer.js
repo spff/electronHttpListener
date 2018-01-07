@@ -23,10 +23,27 @@ ipc.on('tray-exit', ()=> {
   trayOn = false
 })
 
+
+ipc.on('test', (event, data)=> {
+  shLog(data)
+  console.log(data)
+})
+
+
+ipc.on('bon-jour', (event, data)=> {
+  shLog(data)
+  document.getElementById("bon-jour").innerHTML += data.msg
+
+})
+
+
 ipc.on('new-message', (event, data)=> {
-  shLog(JSON.stringify(data.msg))
-  latex.innerHTML = JSON.stringify(data.msg)
-  addBlock("", "")
+  shLog(JSON.parse(data.msg))
+  var realData = JSON.parse(data.msg)
+
+  var str1 = realData.message_time + " " + realData.accounting_number + " " + realData.customer
+  var str2 = realData.mawb + " " + realData.state_message
+  addBlock(str1, str2)
 })
 
 
@@ -56,7 +73,7 @@ function addBlock(str1, str2){
   panel.appendChild(button)
   block.appendChild(panel)
   var text = document.createElement("div")
-  text.innerHTML += "12/05 14:27:31 06-12-001 伊兆<br>172-24155213 RL 放行"
+  text.innerHTML += str1 + "<br>" + str2
   block.appendChild(text)
   
   container.appendChild(block)
