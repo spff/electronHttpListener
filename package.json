@@ -5,10 +5,19 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build_mac": "electron-packager . Notifier --overwrite --platform=darwin --arch=x64 --ignore=node_modules/electron-* ",
-    "build_win32": "electron-packager . Notifier --overwrite --platform=win32 --arch=x64 --ignore=node_modules/electron-* --ignore=config.ini --icon logo.ico",
-    "build_linux": "electron-packager . Notifier --overwrite --platform=linux --arch=x64 --ignore=node_modules/electron-* "
+    "build_win32": "electron-builder --win --ia32"
   },
+  "build": {
+    "directories": {
+      "output": "MapleNotifier"
+    },
+    "productName": "MapleNotifier",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    }
+  },
+
   "repository": "https://github.com/spff/electronHttpListener",
   "keywords": [
     "Electron",
@@ -18,11 +27,10 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^1.7.10",
-    "electron-packager": "^10.1.0"
+    "electron-packager": "^10.1.0",
+    "electron-builder": "^19.47.1"
   },
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
     "socket.io-client": "^2.0.4"
   }
 }

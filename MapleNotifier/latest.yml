@@ -1,0 +1,9 @@
+version: 1.0.0
+files:
+  - url: electron-http-listener-setup-1.0.0.exe
+    sha512: 5YnR3jXV9ihgSe9euAQgc2GiiFUqMHgoqCULAA94FB33COxL2n7tal25e1l9qUeOOj/90/4gRS1kddSdyRz0RQ==
+    size: 29993925
+path: electron-http-listener-setup-1.0.0.exe
+sha512: 5YnR3jXV9ihgSe9euAQgc2GiiFUqMHgoqCULAA94FB33COxL2n7tal25e1l9qUeOOj/90/4gRS1kddSdyRz0RQ==
+sha2: 0e13999c07c701f2a9892ef671c875713992f3e178f98e20ace75dac97d8af82
+releaseDate: '2018-01-13T06:04:18.773Z'

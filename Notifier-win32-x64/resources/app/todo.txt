@@ -1,2 +1,0 @@
-make animation to add name when finish async read config
-make anime to show status about connection
